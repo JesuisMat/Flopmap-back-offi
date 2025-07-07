@@ -1,4 +1,4 @@
-// pages/search.js
+// pages/search.js - Updated with Bento Design
 import { useState } from 'react';
 import Head from 'next/head';
 import SearchForm from '../components/SearchForm';
@@ -51,6 +51,10 @@ export default function SearchPage() {
     setError(null);
   };
 
+  const handleExampleClick = (example) => {
+    setSearchQuery(example);
+  };
+
   return (
     <>
       <Head>
@@ -60,6 +64,13 @@ export default function SearchPage() {
       </Head>
 
       <div className={styles.container}>
+        {/* Floating Elements */}
+        <div className={styles.floatingElements}>
+          <div className={styles.floatingElement}></div>
+          <div className={styles.floatingElement}></div>
+          <div className={styles.floatingElement}></div>
+        </div>
+
         <header className={styles.header}>
           <h1 className={styles.title}>
             🗺️ <span className={styles.titleBrand}>FlopMap</span>
@@ -104,19 +115,35 @@ export default function SearchPage() {
             </div>
           )}
 
-          {/* État vide */}
+          {/* État vide avec cartes d'exemples */}
           {!searchResults && !isLoading && !error && (
             <div className={styles.emptyState}>
-              <div className={styles.emptyStateIcon}>🔍</div>
-              <h2>Prêt à découvrir les pires établissements ?</h2>
-              <p>
-                Entrez une ville, un code postal ou des coordonnées GPS pour commencer
-              </p>
-              <div className={styles.examples}>
-                <span>Exemples :</span>
-                <code>Paris, France</code>
-                <code>75001</code>
-                <code>48.8566, 2.3522</code>
+              <div className={styles.emptyStateMain}>
+                <div className={styles.emptyStateIcon}>🔍</div>
+                <h2>Prêt à découvrir les pires établissements ?</h2>
+                <p>
+                  Entrez une ville, un code postal ou des coordonnées GPS pour commencer votre exploration
+                </p>
+              </div>
+              
+              <div className={styles.exampleCards}>
+                <div className={styles.exampleCard} onClick={() => handleExampleClick('Paris, France')}>
+                  <h3>🏛️ Ville + Pays</h3>
+                  <p>Recherchez par nom de ville</p>
+                  <code>Paris, France</code>
+                </div>
+                
+                <div className={styles.exampleCard} onClick={() => handleExampleClick('75001')}>
+                  <h3>📮 Code Postal</h3>
+                  <p>Recherchez par code postal</p>
+                  <code>75001</code>
+                </div>
+                
+                <div className={styles.exampleCard} onClick={() => handleExampleClick('48.8566, 2.3522')}>
+                  <h3>🌍 Coordonnées GPS</h3>
+                  <p>Recherchez par coordonnées</p>
+                  <code>48.8566, 2.3522</code>
+                </div>
               </div>
             </div>
           )}
