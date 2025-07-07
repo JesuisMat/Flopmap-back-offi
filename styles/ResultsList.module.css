@@ -1,0 +1,404 @@
+/* styles/ResultsList.module.css */
+.resultsContainer {
+  width: 100%;
+}
+
+.resultsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.resultsInfo {
+  flex: 1;
+  min-width: 300px;
+}
+
+.resultsTitle {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.resultsCount {
+  color: #666;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.searchMeta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.searchType,
+.executionTime {
+  background: #f0f0f0;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.sortControls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sortLabel {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.sortSelect {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.viewControls {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.viewButton {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.viewButton:hover {
+  background: #e0e0e0;
+}
+
+.viewButton.active {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+
+.quickStats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #ff6b6b, #ffa500);
+  border-radius: 15px;
+  color: white;
+}
+
+.stat {
+  text-align: center;
+}
+
+.statValue {
+  display: block;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.placesList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.gridView {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.noResults {
+  text-align: center;
+  padding: 3rem;
+  background: #f9f9f9;
+  border-radius: 15px;
+}
+
+.noResultsIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.disclaimer {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: #856404;
+}
+
+/* styles/PlaceCard.module.css */
+.placeCard {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.placeCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.listCard {
+  display: flex;
+  min-height: 200px;
+}
+
+.gridCard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.rankBadge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: linear-gradient(45deg, #ff6b6b, #ffa500);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.photoSection {
+  position: relative;
+  min-height: 200px;
+  flex: 0 0 300px;
+}
+
+.gridCard .photoSection {
+  flex: 0 0 200px;
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photoNavigation {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+}
+
+.photoNavDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.photoNavDot.active {
+  background: white;
+}
+
+.content {
+  padding: 1.5rem;
+  flex: 1;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  flex: 1;
+}
+
+.status {
+  margin-left: 1rem;
+}
+
+.openStatus {
+  font-size: 0.8rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  font-weight: 500;
+}
+
+.openStatus.open {
+  background: #e8f5e8;
+  color: #2e7d32;
+}
+
+.openStatus.closed {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+.ratingSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.ratingMain {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ratingNumber {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.stars {
+  color: #ffc107;
+  font-size: 1.2rem;
+}
+
+.reviewCount {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.priceLevel {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.metaInfo {
+  margin-bottom: 1rem;
+}
+
+.types {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.address {
+  color: #888;
+  font-size: 0.85rem;
+}
+
+.contact {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.contactLink {
+  color: #667eea;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.contactLink:hover {
+  color: #5a6fd8;
+  text-decoration: underline;
+}
+
+.reviewsSection {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 1rem;
+}
+
+.reviewsTitle {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.review {
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 10px;
+  border-left: 4px solid #ff6b6b;
+}
+
+.reviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.reviewRating {
+  color: #ffc107;
+  font-size: 0.9rem;
+}
+
+.reviewTime {
+  color: #666;
+  font-size: 0.8rem;
+}
+
+.reviewText {
+  color: #333;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+  font-style: italic;
+}
+
+.toggleReviews {
+  background: none;
+  border: none;
+  color: #667eea;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  margin-top: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.toggleReviews:hover {
+  color: #5a6fd8;
+}

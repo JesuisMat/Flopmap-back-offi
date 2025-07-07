@@ -1,0 +1,202 @@
+/* styles/SearchForm.module.css */
+.searchForm {
+  width: 100%;
+}
+
+.newSearchButton {
+  background: linear-gradient(45deg, #ff6b6b, #ffa500);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.newSearchButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mainSearch {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.searchInputContainer {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 15px;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.geoButton {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 15px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.geoButton:hover {
+  background: #45a049;
+  transform: scale(1.05);
+}
+
+.searchButton {
+  background: linear-gradient(45deg, #ff6b6b, #ffa500);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 15px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.searchButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.searchButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.advancedSection {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 1.5rem;
+}
+
+.advancedToggle {
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  transition: color 0.3s ease;
+}
+
+.advancedToggle:hover {
+  color: #333;
+}
+
+.advancedOptions {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.optionGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.optionLabel {
+  font-weight: 500;
+  color: #333;
+}
+
+.rangeInput {
+  width: 100%;
+  height: 6px;
+  background: #e0e0e0;
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.rangeInput::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #667eea;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.rangeLabels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.placeTypesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.placeTypeItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.placeTypeItem:hover {
+  background: #f5f5f5;
+}
+
+.placeTypeCheckbox {
+  margin: 0;
+}
+
+.placeTypeLabel {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.hint {
+  font-size: 0.8rem;
+  color: #666;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+.searchTypeIndicator {
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+  padding: 0.5rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
