@@ -1,0 +1,363 @@
+/* styles/Search.module.css - Modern Bento Design */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Animated background grid */
+.container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 50px 50px;
+  z-index: 0;
+  animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+  0% { transform: translateX(0) translateY(0); }
+  100% { transform: translateX(50px) translateY(50px); }
+}
+
+.header {
+  text-align: center;
+  padding: 6rem 2rem 4rem;
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 800;
+  color: white;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 40px rgba(255, 107, 107, 0.3);
+  position: relative;
+}
+
+.titleBrand {
+  background: linear-gradient(135deg, #ff6b6b, #ffa500, #ff4757);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+}
+
+.titleBrand::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #ff6b6b, #ffa500);
+  opacity: 0.1;
+  border-radius: 20px;
+  filter: blur(30px);
+  z-index: -1;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 600px;
+  margin: 0 auto;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Bento Grid Layout */
+.searchSection {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 3rem;
+  margin-bottom: 3rem;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.searchSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #ff6b6b, transparent);
+  opacity: 0.5;
+}
+
+.errorContainer {
+  background: rgba(255, 68, 87, 0.1);
+  border: 1px solid rgba(255, 68, 87, 0.3);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(10px);
+}
+
+.errorMessage {
+  color: #ff4757;
+  font-weight: 500;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.loadingContainer {
+  text-align: center;
+  padding: 4rem;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.loadingContainer p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.1rem;
+  margin-top: 1rem;
+}
+
+.resultsSection {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 3rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.resultsSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #ffa500, transparent);
+  opacity: 0.5;
+}
+
+/* Empty State - Bento Style */
+.emptyState {
+display: flex;              /* Changé de grid à flex */
+  flex-direction: column;     /* Organisation verticale */
+  gap: 2rem;
+  padding: 4rem 2rem;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.emptyStateMain {
+  text-align: center;
+  grid-column: 1 / -1;
+  margin-bottom: 2rem;
+}
+
+.emptyStateIcon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 0 20px rgba(255, 107, 107, 0.3));
+}
+
+.emptyState h2 {
+  color: white;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.emptyState p {
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* Bento Cards for Examples */
+.exampleCards {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;  /* Distribue l'espace entre les cards */
+  align-items: stretch;            /* Étire les cards sur toute la hauteur */
+  gap: 2rem;                       /* Espace entre les cards */
+  width: 100%;                     /* Prend toute la largeur du parent */
+}
+
+.exampleCard {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  flex: 1;                   /* Chaque card prend une part égale */
+  display: flex;             /* Pour centrer le contenu */
+  flex-direction: column;    /* Organisation verticale du contenu */
+  justify-content: center;   /* Centre verticalement */
+}
+
+.exampleCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 165, 0, 0.1));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.exampleCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(255, 107, 107, 0.2);
+  border-color: rgba(255, 107, 107, 0.3);
+}
+
+.exampleCard:hover::before {
+  opacity: 1;
+}
+
+.exampleCard h3 {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.exampleCard p {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  position: relative;
+  z-index: 1;
+}
+
+.exampleCard code {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+  color: #ffa500;
+  font-size: 0.9rem;
+  display: inline-block;
+  margin-top: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 4rem;
+  padding: 2rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 0;
+  }
+  
+  .header {
+    padding: 4rem 1rem 3rem;
+  }
+  
+  .title {
+    font-size: 3rem;
+  }
+  
+  .subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .main {
+    padding: 0 1rem 2rem;
+  }
+  
+  .searchSection,
+  .resultsSection {
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .emptyState {
+    padding: 3rem 1.5rem;
+  }
+  
+ .exampleCards {
+      flex-direction: column;   /* Passe en colonne sur mobile */
+      gap: 1rem;            /* ← Permet le retour à la ligne si nécessaire */
+}
+  
+  .exampleCard {
+    padding: 1.5rem;
+  }
+}
+
+/* Floating Action Styles */
+.floatingElements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.floatingElement {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: linear-gradient(45deg, #ff6b6b, #ffa500);
+  border-radius: 50%;
+  animation: float 6s ease-in-out infinite;
+}
+
+.floatingElement:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+.floatingElement:nth-child(2) { top: 60%; left: 80%; animation-delay: 2s; }
+.floatingElement:nth-child(3) { top: 80%; left: 20%; animation-delay: 4s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+  50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
+}
