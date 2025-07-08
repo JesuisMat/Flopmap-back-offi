@@ -11,7 +11,6 @@ var usersRouter = require('./routes/users');
 
 // Nouvelle route FlopMap
 var searchRouter = require('./routes/search');
-var authRouter = require('./routes/auth');
 
 const cors = require('cors');
 var app = express();
@@ -34,7 +33,7 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/search', searchRouter); // Nouvelle route FlopMap
-app.use('/api/auth', authRouter);
+
 // Middleware de gestion des erreurs 404
 app.use((req, res, next) => {
   res.status(404).json({
