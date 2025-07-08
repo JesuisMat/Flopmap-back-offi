@@ -60,7 +60,7 @@ export default function SearchPage() {
       <Head>
         <title>FlopMap - Découvrez les pires établissements</title>
         <meta name="description" content="Découvrez les établissements les moins bien notés près de chez vous" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/profileIcon.png" />
       </Head>
 
       <div className={styles.container}>
