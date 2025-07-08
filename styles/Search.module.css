@@ -168,8 +168,8 @@
 
 /* Empty State - Bento Style */
 .emptyState {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+display: flex;              /* Changé de grid à flex */
+  flex-direction: column;     /* Organisation verticale */
   gap: 2rem;
   padding: 4rem 2rem;
   background: rgba(255, 255, 255, 0.03);
@@ -208,13 +208,11 @@
 /* Bento Cards for Examples */
 .exampleCards {
   display: flex;
-  flex-direction: row;     /* ← Déjà ajouté */
-  justify-content: space-between; /* ← Déjà présent */
-  align-items: stretch;    /* ← MANQUE */
-  gap: 1.5rem;
-  margin-top: 3rem;
-  flex-wrap: nowrap;
-  width: 100%;             /* ← MANQUE */
+  flex-direction: row;
+  justify-content: space-between;  /* Distribue l'espace entre les cards */
+  align-items: stretch;            /* Étire les cards sur toute la hauteur */
+  gap: 2rem;                       /* Espace entre les cards */
+  width: 100%;                     /* Prend toute la largeur du parent */
 }
 
 .exampleCard {
@@ -227,8 +225,10 @@
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  flex: 1;             /* ← Prendre l'espace disponible équitablement */
-  max-width: 350px;
+  flex: 1;                   /* Chaque card prend une part égale */
+  display: flex;             /* Pour centrer le contenu */
+  flex-direction: column;    /* Organisation verticale du contenu */
+  justify-content: center;   /* Centre verticalement */
 }
 
 .exampleCard::before {
@@ -320,16 +320,12 @@
   }
   
   .emptyState {
-    grid-template-columns: 1fr;
     padding: 3rem 1.5rem;
   }
   
  .exampleCards {
-    display: flex;
-    flex-direction: row;        /* ← FLEX en ligne */
-    justify-content: center;    
-    gap: 1.5rem;
-    flex-wrap: wrap;             /* ← Permet le retour à la ligne si nécessaire */
+      flex-direction: column;   /* Passe en colonne sur mobile */
+      gap: 1rem;            /* ← Permet le retour à la ligne si nécessaire */
 }
   
   .exampleCard {
