@@ -315,83 +315,137 @@ class PlacesService {
    * Extrait les avis les plus "croustillants"
    */
   extractCrunchyReviews(reviews = []) {
-    if (!reviews || reviews.length === 0) return [];
+  if (!reviews || reviews.length === 0) return [];
 
-    return reviews
-      // Filtrer les avis 1-2 étoiles
-      .filter(review => review.rating <= 2)
-      // Trier par pertinence (score de "croustillant")
-      .sort((a, b) => {
-        const scoreA = this.calculateCrunchinessScore(a);
-        const scoreB = this.calculateCrunchinessScore(b);
-        return scoreB - scoreA;
-      })
-      // Prendre les 3 meilleurs
-      .slice(0, 3)
-      // Anonymiser et formater
-      .map(review => ({
-        rating: review.rating,
-        text: this.anonymizeReview(review.text),
-        timeAgo: this.formatTimeAgo(review.time),
-        useful: review.useful || false,
-        crunchinessScore: this.calculateCrunchinessScore(review) // Pour debug
-      }));
-  }
+  return reviews
+    // Prendre les avis jusqu'à 3 étoiles (plus de contenu)
+    .filter(review => review.rating <= 3)
+    // Trier par pertinence (score de "croustillant")
+    .sort((a, b) => {
+      const scoreA = this.calculateCrunchinessScore(a);
+      const scoreB = this.calculateCrunchinessScore(b);
+      return scoreB - scoreA;
+    })
+    // Prendre les 5 meilleurs (au lieu de 3)
+    .slice(0, 5)
+    // Anonymiser et formater
+    .map(review => ({
+      rating: review.rating,
+      text: this.anonymizeReview(review.text),
+      timeAgo: this.formatTimeAgo(review.time),
+      useful: review.useful || false,
+      crunchinessScore: this.calculateCrunchinessScore(review)
+    }));
+}
 
-  /**
-   * Calcule le score de "croustillant" d'un avis
-   */
-  calculateCrunchinessScore(review) {
-    let score = 0;
-    const text = review.text.toLowerCase();
+/**
+ * Calcule le score de "croustillant" d'un avis - VERSION AMÉLIORÉE
+ */
+calculateCrunchinessScore(review) {
+  let score = 0;
+  const text = (review.text || '').toLowerCase();
+  
+  // Bonus inversé pour la note (1 étoile = 50 points, 2 = 40, 3 = 30)
+  score += (4 - review.rating) * 25;
+  
+  // Bonus pour la longueur (plus c'est long, plus c'est juteux)
+  score += Math.min(text.length / 10, 50);
+  
+  // Mots-clés négatifs français ÉTENDUS
+  const negativeKeywords = [
+    // Mots forts existants
+    'horrible', 'atroce', 'dégueulasse', 'sale', 'répugnant',
+    'pire', 'catastrophe', 'scandale', 'fuyez', 'évitez',
+    'jamais', 'inadmissible', 'inacceptable', 'honteux',
+    'dégoûtant', 'immonde', 'pourri', 'nul', 'minable',
+    'catastrophique', 'lamentable', 'pitoyable', 'abject',
     
-    // Bonus pour la longueur (plus c'est long, plus c'est juteux)
-    score += Math.min(text.length / 10, 50);
-    
-    // Mots-clés négatifs français qui augmentent le score
-    const negativeKeywords = [
-      'horrible', 'atroce', 'dégueulasse', 'sale', 'répugnant',
-      'pire', 'catastrophe', 'scandale', 'fuyez', 'évitez',
-      'jamais', 'inadmissible', 'inacceptable', 'honteux',
-      'dégoûtant', 'immonde', 'pourri', 'nul', 'minable',
-      'catastrophique', 'lamentable', 'pitoyable', 'abject'
-    ];
-    
-    negativeKeywords.forEach(keyword => {
-      const matches = (text.match(new RegExp(keyword, 'gi')) || []).length;
-      score += matches * 20;
-    });
-    
-    // Bonus pour les mots d'intensité
-    const intensityWords = [
-      'très', 'extrêmement', 'complètement', 'totalement',
-      'vraiment', 'absolument', 'particulièrement'
-    ];
-    
-    intensityWords.forEach(word => {
-      if (text.includes(word)) {
-        score += 10;
-      }
-    });
-    
-    // Bonus pour les émojis négatifs
-    const negativeEmojis = ['😠', '😡', '🤮', '💩', '👎', '😤', '🙄'];
-    negativeEmojis.forEach(emoji => {
-      if (text.includes(emoji)) {
-        score += 15;
-      }
-    });
-    
-    // Bonus pour les majuscules (cris)
-    const capsWords = text.match(/[A-Z]{3,}/g) || [];
-    score += capsWords.length * 5;
-    
-    // Bonus pour les points d'exclamation multiples
-    const exclamationMatches = text.match(/!{2,}/g) || [];
-    score += exclamationMatches.length * 10;
-    
-    return score;
-  }
+    // NOUVEAUX mots-clés courants
+    'arnaque', 'voleur', 'escroquerie', 'piège', 'attrape-touriste',
+    'décevant', 'déception', 'bof', 'pas terrible', 'mouais',
+    'à fuir', 'à éviter', 'passez votre chemin', 'allez ailleurs',
+    'infect', 'infâme', 'ignoble', 'insipide', 'fade',
+    'froid', 'réchauffé', 'surgelé', 'industriel', 'caoutchouc',
+    'malade', 'intoxication', 'vomi', 'gerbe', 'diarrhée',
+    'malpoli', 'désagréable', 'odieux', 'méprisant', 'hautain',
+    'attente interminable', 'oublié', 'ignoré', 'transparent',
+    'cher pour rien', 'prix exorbitant', 'trop cher', 'pas donné'
+  ];
+  
+  // Expressions négatives (bonus plus élevé)
+  const negativeExpressions = [
+    'ne vaut pas', 'perte de temps', 'perte d\'argent',
+    'plus jamais', 'première et dernière fois',
+    'je déconseille', 'je ne recommande pas',
+    'grosse déception', 'très déçu', 'extrêmement déçu',
+    'rapport qualité prix', 'qualité prix médiocre',
+    'pas frais', 'pas bon', 'pas propre',
+    'service déplorable', 'accueil glacial'
+  ];
+  
+  // Calcul du score pour mots simples
+  negativeKeywords.forEach(keyword => {
+    const matches = (text.match(new RegExp(keyword, 'gi')) || []).length;
+    score += matches * 15;
+  });
+  
+  // Calcul du score pour expressions (bonus plus élevé)
+  negativeExpressions.forEach(expr => {
+    if (text.includes(expr)) {
+      score += 30;
+    }
+  });
+  
+  // Bonus pour les mots d'intensité
+  const intensityWords = [
+    'très', 'extrêmement', 'complètement', 'totalement',
+    'vraiment', 'absolument', 'particulièrement', 'trop',
+    'beaucoup trop', 'ultra', 'super', 'hyper', 'méga'
+  ];
+  
+  intensityWords.forEach(word => {
+    const matches = (text.match(new RegExp(word, 'gi')) || []).length;
+    score += matches * 8;
+  });
+  
+  // Bonus pour les émojis négatifs
+  const negativeEmojis = ['😠', '😡', '🤮', '💩', '👎', '😤', '🙄', '😒', '😑', '🤢', '😖', '😣'];
+  negativeEmojis.forEach(emoji => {
+    if (text.includes(emoji)) {
+      score += 20;
+    }
+  });
+  
+  // Bonus pour les majuscules (cris)
+  const capsWords = text.match(/[A-Z]{3,}/g) || [];
+  score += capsWords.length * 10;
+  
+  // Bonus pour les points d'exclamation multiples
+  const exclamationMatches = text.match(/!{2,}/g) || [];
+  score += exclamationMatches.length * 15;
+  
+  // Bonus pour les points de suspension (dépit)
+  const suspensionMatches = text.match(/\.{3,}/g) || [];
+  score += suspensionMatches.length * 5;
+  
+  // Bonus si l'avis mentionne des problèmes de santé
+  const healthKeywords = ['malade', 'vomi', 'hôpital', 'médecin', 'intoxication', 'allergie'];
+  healthKeywords.forEach(keyword => {
+    if (text.includes(keyword)) {
+      score += 40;
+    }
+  });
+  
+  // Bonus si mention de remboursement/litige
+  const disputeKeywords = ['remboursement', 'litige', 'plainte', 'avocat', 'tribunal', 'police'];
+  disputeKeywords.forEach(keyword => {
+    if (text.includes(keyword)) {
+      score += 35;
+    }
+  });
+  
+  return score;
+}
 
   /**
    * Anonymise un avis en supprimant les noms
