@@ -257,12 +257,27 @@ class AuthService {
    */
   async incrementSearchCount(userId) {
     try {
-      await this.db
+      // Supabase n'utilise pas this.db.raw(), on fait un SELECT puis UPDATE
+      const { data: currentUser, error: selectError } = await this.db
+        .from('users')
+        .select('daily_searches_used')
+        .eq('id', userId)
+        .single();
+
+      if (selectError) {
+        throw new Error(selectError.message);
+      }
+
+      const { error: updateError } = await this.db
         .from('users')
         .update({
-          daily_searches_used: this.db.raw('daily_searches_used + 1')
+          daily_searches_used: (currentUser.daily_searches_used || 0) + 1
         })
         .eq('id', userId);
+
+      if (updateError) {
+        throw new Error(updateError.message);
+      }
 
       return { success: true };
 
