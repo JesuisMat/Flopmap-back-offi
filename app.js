@@ -8,7 +8,7 @@ var logger = require('morgan');
 // Routes existantes
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+var stripeRouter = require('./routes/stripe');
 // Routes FlopMap
 var searchRouter = require('./routes/search');
 var authRouter = require('./routes/auth');
@@ -90,7 +90,7 @@ const apiLimiter = rateLimit({
 // Rate limiting pour l'authentification
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5, // 5 tentatives de connexion par IP
+  max: 80, // 5 tentatives de connexion par IP
   message: {
     success: false,
     error: 'Trop de tentatives de connexion, veuillez réessayer plus tard'
@@ -150,6 +150,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/search', apiLimiter, searchRouter);
 app.use('/api/auth', authLimiter, authRouter);
+app.use('/stripe', stripeRouter);
+
 
 // Test endpoint pour vérifier la santé de l'API
 app.get('/api/health', async (req, res) => {

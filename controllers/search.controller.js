@@ -1,11 +1,13 @@
 // controllers/search.controller.js
 const GeocodingService = require('../services/geocoding.service');
 const PlacesService = require('../services/places.service');
+const AuthService = require('../services/auth.service');
 
 class SearchController {
   constructor() {
     this.geocodingService = new GeocodingService();
     this.placesService = new PlacesService();
+    this.authService = new AuthService();
   }
 
   /**
